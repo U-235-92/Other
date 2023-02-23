@@ -55,12 +55,7 @@ public class NIOServer {
 						write(key);
 					}
 				} catch (IOException e) {
-					System.out.println("Client quit!");
-					try {
-						key.channel().close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					handleResetConnectionClient(key);
 				}
 				iterator.remove();
 			});
@@ -88,17 +83,43 @@ public class NIOServer {
 				String msg = new String(buff.array(), buff.position(), buff.remaining()).trim();
 				System.out.printf("[Bytes read = %d; Client msg]: %s%n", bytesRead, msg);
 				if(bytesRead == msg.getBytes().length) {
-					buff.clear();
+//					buff.clear();
 				} else {
 					buff.compact();
 				}
+				channel.register(selector, SelectionKey.OP_WRITE);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			handleResetConnectionClient(key);
 		} 
 	}
 	
-	private void write(SelectionKey key) {
-		
+	private void write(SelectionKey key) throws IOException {
+		SocketChannel channel = (SocketChannel) key.channel();
+		ByteBuffer buff = mapClientChannelToBuffer.get(channel);
+		String dataBuff = new String(buff.array(), buff.position(), buff.remaining()).trim();
+		String prefix = "[Echo] ";
+		String msg = prefix + dataBuff;
+		buff.clear();
+		buff.put(msg.getBytes());
+		buff.flip();
+		int bytesWritten = channel.write(buff);
+		if(bytesWritten == msg.getBytes().length) {
+			buff.clear();
+		} else {
+			buff.compact();
+		}
+		channel.register(selector, SelectionKey.OP_READ);
+	}
+	
+	private void handleResetConnectionClient(SelectionKey key) {
+		System.out.println("Client quit!");
+		try {
+			SocketChannel channel = (SocketChannel) key.channel();
+			mapClientChannelToBuffer.remove(channel);
+			channel.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
