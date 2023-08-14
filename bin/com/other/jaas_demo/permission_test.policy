@@ -1,0 +1,14 @@
+grant {
+	permission javax.security.auth.AuthPermission "createLoginContext.Log_configuration";
+	permission javax.security.auth.AuthPermission "modifyPrincipals";
+	permission javax.security.auth.AuthPermission "doAsPrivileged";
+	permission javax.security.auth.AuthPermission "doAs";
+};
+
+grant principal com.other.jaas_demo.util.RolePrincipal "admin" {
+	permission com.other.jaas_demo.util.AccountPermission "add", "allow";
+};
+
+grant principal com.other.jaas_demo.util.RolePrincipal "user" {
+	permission com.other.jaas_demo.util.AccountPermission "add", "prohibited";
+};
