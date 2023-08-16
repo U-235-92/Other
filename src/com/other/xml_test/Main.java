@@ -10,6 +10,8 @@ public class Main {
 		DOMLibraryParser domParser = new DOMLibraryParser(source, true);
 //		domParser.parseBooks();
 		SAXLibraryParser saxParser = new SAXLibraryParser(source);
-		saxParser.parseBooks();
+//		saxParser.parseBooks();
+		STAXLibraryParser staxParser = new STAXLibraryParser(source);
+		staxParser.parseBooks();
 	}
 }
