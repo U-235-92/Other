@@ -31,8 +31,15 @@ public class DOMLibraryParser {
 		this.xsdValidate = xsdValidate;
 	}
 	
+	public void editLibrary() {
+		
+	}
 	
-	public void getBooks() {
+	public void makeLibrary() {
+		
+	}
+	
+	public void parseBooks() {
 		try {
 			Document domDocument = initialize();
 			getBooks0(domDocument);

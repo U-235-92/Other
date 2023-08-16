@@ -8,6 +8,8 @@ public class Main {
 	public static void main(String[] args) {
 		File source = Paths.get("src/com/other/xml_test/LibraryDocument.xml").toFile(); 
 		DOMLibraryParser domParser = new DOMLibraryParser(source, true);
-		domParser.getBooks();
+//		domParser.parseBooks();
+		SAXLibraryParser saxParser = new SAXLibraryParser(source);
+		saxParser.parseBooks();
 	}
 }
