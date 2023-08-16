@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library lib_name="Old town library" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LibraryXSD.xsd">    
+    <book id="BN-1">
+        <title>Бравый солдат Швейк</title>
+        <author>Ярослав Гашек</author>
+    </book>
+    <book id="BN-2">
+        <title>Сегун</title>
+        <author>Грэм Макнилл</author>
+    </book>
+    <book id="BN-3">
+        <title>Шамал</title>
+        <author>Грэм Макнилл</author>
+    </book>
+    <book id="BN-4">
+        <title>Война и мир</title>
+        <author>Лев Толстой</author>
+    </book>
+    <book id="BN-5">
+        <title>Java полное руководство</title>
+        <author>Герберт Шилдт</author>
+    </book>
+    <book id="BN-6">
+    	<title>Java. Методы программирования</title>
+    	<author>Валерий Романчик</author>
+    	<author>‎Игорь Блинов</author>
+    </book>
+</library>

@@ -1,0 +1,6 @@
+<!ELEMENT library (book)+ >
+<!ELEMENT book (title, author+) >
+<!ELEMENT title (CDATA) >
+<!ELEMENT author (CDATA) >
+<!ATTLIST book id ID #REQUIRED>
+<!ATTLIST library lib_name CDATA #REQUIRED>
