@@ -28,10 +28,18 @@ public class STAXLibraryParser {
 		this.source = source;
 	}
 	
+	public void editLibrary() {
+		
+	}
+	
+	public void makeLibrary() {
+		
+	}
+	
 	public void parseBooks() {
 		try {
 			XMLEventReader reader = initialize();
-			parseLibrary0(reader);
+			parseBooks0(reader);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
@@ -47,7 +55,7 @@ public class STAXLibraryParser {
 		return eventReader;
 	}
 	
-	private void parseLibrary0(XMLEventReader reader) throws XMLStreamException {
+	private void parseBooks0(XMLEventReader reader) throws XMLStreamException {
 		while(reader.hasNext()) {
 			XMLEvent event = reader.nextEvent();
 			if(event.isStartElement()) {
