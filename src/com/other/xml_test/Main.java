@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		File source = Paths.get("src/com/other/xml_test/LibraryDocument.xml").toFile(); 
-		DOMLibraryParser domParser = new DOMLibraryParser(true);
+		LibraryDocumentHandlerDOM domParser = new LibraryDocumentHandlerDOM(true);
 		System.out.println("Before edit...");
 		domParser.showBooks(source);
 		System.out.println("After edit...");
