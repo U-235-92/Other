@@ -3,6 +3,9 @@ package com.other.xml_test;
 import java.io.File;
 import java.util.List;
 
+import javax.xml.xpath.XPathException;
+import javax.xml.xpath.XPathExpressionException;
+
 import org.w3c.dom.Element;
 
 public abstract class LibraryDocumentHandler {
@@ -15,7 +18,7 @@ public abstract class LibraryDocumentHandler {
 	protected abstract void editBook(File source, File destination, String id, String typeEdit, String titleEdit, List<String> authorsEdit);
 	protected abstract void removeBook(File source, File destination, String id);
 	protected abstract void makeLibrary(File destination, List<Book> books);
-	protected abstract Element searchBookElement(File source, String id);
+	protected abstract Element searchBookElement(File source, String id) throws XPathException;
 	protected abstract List<Book> searchBookByAuthor(File source, String author);
 	protected abstract List<Book> searchBookByTitle(File source, String title);
 	protected abstract void transformDoument(File source, File destination);

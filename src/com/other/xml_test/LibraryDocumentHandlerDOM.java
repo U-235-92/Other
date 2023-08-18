@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,21 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathEvaluationResult;
+import javax.xml.xpath.XPathEvaluationResult.XPathResultType;
+import javax.xml.xpath.XPathException;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathNodes;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,11 +43,15 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	private DocumentBuilder documentBuilder;
 	private Document document;
 	
+	private XPathFactory xPathFactory;
+	private XPath xPath;
+	
 	public LibraryDocumentHandlerDOM(boolean xsdValidate, boolean nameSpaceAware) {
 		this.xsdValidate = xsdValidate;
 		this.nameSpaceAware = nameSpaceAware;
 		try {
-			initialize();
+			initializeDOM();
+			initializeXPath();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -46,13 +61,19 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		}
 	}
 	
-	private void initialize() throws ParserConfigurationException, SAXException, IOException {
+	private void initializeDOM() throws ParserConfigurationException, SAXException, IOException {
 		documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setNamespaceAware(nameSpaceAware);
+		documentBuilderFactory.setValidating(true);
 		if(xsdValidate) {			
 			documentBuilderFactory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
 		}
 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+	}
+	
+	private void initializeXPath() {
+		xPathFactory = XPathFactory.newInstance();
+		xPath = xPathFactory.newXPath();
 	}
 
 	@Override
@@ -76,6 +97,8 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 			Node bookNode = bookNodes.item(i);
 			if(bookNode.getNodeType() == Node.ELEMENT_NODE) {
 				String title = ((Element) bookNode).getElementsByTagName("title").item(0).getTextContent();
+				String type = ((Element) bookNode).getAttribute("type");
+				String id = ((Element) bookNode).getAttribute("id");
 				NodeList authorNodes = ((Element) bookNode).getElementsByTagName("author");
 				List<String> authorList = new ArrayList<>();
 				for (int j = 0; j < authorNodes.getLength(); j++) {
@@ -86,6 +109,8 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 				Book book = new Book();
 				book.setTitle(title);
 				book.setAuthors(authorList);
+				book.setType(type);
+				book.setId(id);
 				bookList.add(book);
 			}
 		}
@@ -94,9 +119,12 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	
 	@Override
 	protected void addBook(File source, File destination, Book book) {
+		if(book == null) {
+			throw new NullPointerException("The book is null");
+		}
 		try {
 			addBook0(source, book);
-			saveLibraryChanges(document, destination);
+			saveLibrary(document, destination);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -121,7 +149,7 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 			bookAuthor.setTextContent(author);
 			bookElement.appendChild(bookAuthor);
 		}
-		Element libraryElement = (Element) document.getElementsByTagName("library");
+		Element libraryElement = (Element) document.getElementsByTagName("library").item(0);
 		libraryElement.appendChild(bookElement);
 	}
 
@@ -129,10 +157,12 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	protected void editBook(File source, File destination, String id, String typeEdit, String titleEdit, List<String> authorsEdit) {
 		try {
 			editBook0(source, id, typeEdit, titleEdit, authorsEdit);
-			saveLibraryChanges(document, destination);
+			saveLibrary(document, destination);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (XPathException e) {
 			e.printStackTrace();
 		} catch (TransformerException e) {
 			e.printStackTrace();
@@ -141,7 +171,10 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		}
 	}
 	
-	private void editBook0(File source, String id, String typeEdit, String titleEdit, List<String> authorsEdit) throws SAXException, IOException {
+	private void editBook0(File source, String id, String typeEdit, String titleEdit, List<String> authorsEdit) throws SAXException, IOException, XPathException {
+		if(id == null) {
+			throw new NullPointerException("book id is null");
+		}
 		document = documentBuilder.parse(source);
 		Element bookElement = searchBookElement(source, id);
 		if(bookElement != null) {
@@ -151,29 +184,31 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 			String oldTitleTextContent = titleElement.getTextContent();
 			titleElement.setTextContent(titleEdit == null ? oldTitleTextContent : titleEdit);
 			NodeList authorNodes = bookElement.getElementsByTagName("author");
-			if(authorNodes.getLength() == authorsEdit.size()) {
-				for (int i = 0; i < authorNodes.getLength(); i++) {
-					authorNodes.item(i).setTextContent(authorsEdit.get(i));
-				}
-			} else if(authorNodes.getLength() > authorsEdit.size()) {
-				for (int i = 0; i < authorNodes.getLength(); i++) {
-					if(i < authorsEdit.size()) {
+			if(authorsEdit != null) {
+				if(authorNodes.getLength() == authorsEdit.size()) {
+					for (int i = 0; i < authorNodes.getLength(); i++) {
 						authorNodes.item(i).setTextContent(authorsEdit.get(i));
-					} else {
-						bookElement.removeChild(authorNodes.item(i));
+					}
+				} else if(authorNodes.getLength() > authorsEdit.size()) {
+					for (int i = 0; i < authorNodes.getLength(); i++) {
+						if(i < authorsEdit.size()) {
+							authorNodes.item(i).setTextContent(authorsEdit.get(i));
+						} else {
+							bookElement.removeChild(authorNodes.item(i));
+						}
+					}
+				} else {
+					for (int i = 0; i < authorsEdit.size(); i++) {
+						if(i < authorNodes.getLength()) {
+							authorNodes.item(i).setTextContent(authorsEdit.get(i));
+						} else {
+							Element authorElement = document.createElement("author");
+							authorElement.setTextContent(authorsEdit.get(i));
+							bookElement.appendChild(authorElement);
+						}
 					}
 				}
-			} else {
-				for (int i = 0; i < authorsEdit.size(); i++) {
-					if(i < authorNodes.getLength()) {
-						authorNodes.item(i).setTextContent(authorsEdit.get(i));
-					} else {
-						Element authorElement = document.createElement("author");
-						authorElement.setTextContent(authorsEdit.get(i));
-						bookElement.appendChild(authorElement);
-					}
-				}
-			}
+			} 
 		} else {
 			System.out.println("The book id=" + id + " is not exist");
 		}
@@ -183,10 +218,12 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	protected void removeBook(File source, File destination, String id) {
 		try {
 			removeBook0(source, destination, id);
-			saveLibraryChanges(document, destination);
+			saveLibrary(document, destination);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (XPathException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -195,11 +232,11 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		}
 	}
 	
-	private void removeBook0(File source, File destination, String id) throws SAXException, IOException {
+	private void removeBook0(File source, File destination, String id) throws SAXException, IOException, XPathException {
 		document = documentBuilder.parse(source);
 		Element bookElement = searchBookElement(source, id);
 		if(bookElement != null) {
-			Element libraryElement = (Element) document.getElementsByTagName("library");
+			Element libraryElement = (Element) document.getElementsByTagName("library").item(0);
 			libraryElement.removeChild(bookElement);
 		} else {
 			System.out.println("The book id=" + id + " is not exist");
@@ -208,11 +245,50 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	
 	@Override
 	protected void makeLibrary(File destination, List<Book> books) {
-		// TODO Auto-generated method stub
+		fillLibrary(books);
+		Document document = makeLibrary0(destination, books);
+		saveLibrary(document, destination);
+	}
+	
+	private void fillLibrary(List<Book> books) {
 		
 	}
+	
+	private Document makeLibrary0(File destination, List<Book> books) throws SAXException, ParserConfigurationException {
+		SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
+		File schemaSource = Paths.get("src/com/other/xml_test/LibraryXSD.xsd").toFile();
+		Schema schema = schemaFactory.newSchema(schemaSource);
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setNamespaceAware(true);
+		documentBuilderFactory.setValidating(true);
+		documentBuilderFactory.setSchema(schema);
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.newDocument();
+		Element libraryElement = makeLibraryElement(document);
+	}
+	
+	private Element makeLibraryElement(Document document) {
+		Element rootElement = document.createElement("library");
+		rootElement.setAttribute("lib_name", "New library");
+		return rootElement;
+	}
+	
+	private Element makeBookElement(Document document, Book book) {
+		Element bookElement = document.createElement("book");
+		bookElement.setAttribute("id", book.getId());
+		bookElement.setAttribute("type", book.getType());
+		Element titleElement = document.createElement("title");
+		titleElement.setTextContent(book.getTitle());
+		bookElement.appendChild(titleElement);
+		for(String author : book.getAuthors()) {
+			Element authorElement = document.createElement("author");
+			authorElement.setTextContent(author);
+			bookElement.appendChild(authorElement);
+		}
+		return bookElement;
+	}
 
-	private void saveLibraryChanges(Document document, File destination) throws FileNotFoundException, TransformerException {
+	private void saveLibrary(Document document, File destination) throws FileNotFoundException, TransformerException {
 		DOMSource domSource = new DOMSource(document);
 		StreamResult streamResult = new StreamResult(new FileOutputStream(destination));
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -223,21 +299,92 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	}
 	
 	@Override
-	protected Element searchBookElement(File source, String id) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Element searchBookElement(File source, String id) throws XPathException {
+		XPathEvaluationResult<?> xPathResult = xPath.evaluateExpression("//book[@id=" + "'" + id + "'" + "]", document);
+		Element bookElement = null;
+		if(xPathResult.type() == XPathResultType.NODESET) {
+			XPathNodes xPathNodes = (XPathNodes) xPathResult.value();
+			Node testNode = xPathNodes.get(0);
+			if((testNode).getNodeType() == Node.ELEMENT_NODE) {
+				bookElement = (Element) testNode;
+			}
+		}
+		return bookElement;
 	}
 
 	@Override
 	protected List<Book> searchBookByAuthor(File source, String author) {
-		// TODO Auto-generated method stub
-		return null;
+		XPathNodes xPathNodes = null;
+		try {
+			xPathNodes = searchBookNodes(source, "author", author);
+			return composeAllBooks(xPathNodes);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
 	protected List<Book> searchBookByTitle(File source, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		XPathNodes xPathNodes = null;
+		try {
+			xPathNodes = searchBookNodes(source, "title", title);
+			return composeAllBooks(xPathNodes);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+	
+	private XPathNodes searchBookNodes(File source, String nameElement, String valueElement) throws XPathExpressionException, SAXException, IOException {
+		document = documentBuilder.parse(source);
+		String expression = "//book[child::" + nameElement + "[text()=" + "'" + valueElement + "'" + "]]";
+		XPathEvaluationResult<?> xPathEvaluationResult = xPath.evaluateExpression(expression , document); 
+		XPathNodes xPathNodes = xPathEvaluationResult.type() == XPathResultType.NODESET ? (XPathNodes) xPathEvaluationResult.value() : null;
+		if(xPathNodes == null) {
+			throw new NullPointerException("The result of xPath is null");
+		}
+		return xPathNodes;
+	}
+	
+	private List<Book> composeAllBooks(XPathNodes xPathNodes) {
+		List<Book> bookList = new ArrayList<>();
+		if(xPathNodes != null) {
+			for(Node bookNode : xPathNodes) {
+				if(bookNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element bookElement = (Element) bookNode;
+					String id = bookElement.getAttribute("id");
+					String type = bookElement.getAttribute("type");
+					String title = bookElement.getElementsByTagName("title").item(0).getTextContent();
+					List<String> authorList = new ArrayList<>();
+					NodeList authorNodes = bookElement.getElementsByTagName("author");
+					for (int i = 0; i < authorNodes.getLength(); i++) {
+						Node authorNode = authorNodes.item(i);
+						String authorValue = authorNode.getTextContent();
+						authorList.add(authorValue);
+					}
+					Book book = new Book();
+					book.setAuthors(authorList);
+					book.setId(id);
+					book.setTitle(title);
+					book.setType(type);
+					bookList.add(book);
+				}
+			}			
+		}
+		return bookList;
 	}
 
 	@Override

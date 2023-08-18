@@ -2,7 +2,7 @@
 <library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" lib_name="Old town library" xsi:noNamespaceSchemaLocation="LibraryXSD.xsd">
         
     
-    <book id="BN-1">
+    <book id="BN-1" type="Сатирический роман">
                 
         <title>Бравый солдат Швейк</title>
                 
@@ -10,23 +10,23 @@
             
     </book>
         
-    <book id="BN-2">
+    <book id="BN-2" type="Роман-эпопея">
                 
         <title>Сегун</title>
                 
-        <author>Грэм Макнилл</author>
+        <author>Джеймс Клавелл</author>
             
     </book>
         
-    <book id="BN-3">
+    <book id="BN-3" type="Роман">
                 
-        <title>Король крыс</title>
+        <title>Шамал</title>
                 
-        <author>Грэм Макнилл</author>
+        <author>Джеймс Клавелл</author>
             
     </book>
         
-    <book id="BN-4">
+    <book id="BN-4" type="Роман-эпопея">
                 
         <title>Война и мир</title>
                 
@@ -34,7 +34,7 @@
             
     </book>
         
-    <book id="BN-5">
+    <book id="BN-5" type="Информатика">
                 
         <title>Java полное руководство</title>
                 
@@ -42,7 +42,7 @@
             
     </book>
         
-    <book id="BN-6">
+    <book id="BN-6" type="Информатика">
             	
         <title>Java. Методы программирования</title>
             	
@@ -52,4 +52,8 @@
             
     </book>
     
+    <book id="BN-99" type="Роман-эпопея">
+        <title>Вечный зов</title>
+        <author>Анатолий Иваноов</author>
+    </book>
 </library>

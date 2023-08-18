@@ -10,12 +10,22 @@ public class Book {
 	private String id;
 	private String type;
 	
-	public Book() {}
+	public Book() {
+		super();
+	}
+
+	public Book(String title, List<String> authors, String id, String type) {
+		super();
+		this.title = title;
+		this.authors = authors;
+		this.id = id;
+		this.type = type;
+	}
 
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -46,6 +56,6 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return title + " " + authors.toString();
+		return title + ", " + authors.toString() + ", " + type + ", " + " " + id;
 	}
 }
