@@ -18,8 +18,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathEvaluationResult;
 import javax.xml.xpath.XPathEvaluationResult.XPathResultType;
@@ -124,7 +126,7 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		}
 		try {
 			addBook0(source, book);
-			saveLibrary(document, destination);
+			saveLibrary(document, destination, "xml");
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -157,7 +159,7 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	protected void editBook(File source, File destination, String id, String typeEdit, String titleEdit, List<String> authorsEdit) {
 		try {
 			editBook0(source, id, typeEdit, titleEdit, authorsEdit);
-			saveLibrary(document, destination);
+			saveLibrary(document, destination, "xml");
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -218,7 +220,7 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	protected void removeBook(File source, File destination, String id) {
 		try {
 			removeBook0(source, destination, id);
-			saveLibrary(document, destination);
+			saveLibrary(document, destination, "xml");
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -246,12 +248,38 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	@Override
 	protected void makeLibrary(File destination, List<Book> books) {
 		fillLibrary(books);
-		Document document = makeLibrary0(destination, books);
-		saveLibrary(document, destination);
+		try {
+			Document document = makeLibrary0(destination, books);
+			saveLibrary(document, destination, "xml");
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void fillLibrary(List<Book> books) {
-		
+		List<String> bookShildtAuthor = new ArrayList<>();
+		bookShildtAuthor.add("Герберт Шилдт");
+		Book shildtBook = new Book("Java. Полное руководство", bookShildtAuthor, "SN-1", "Информатика");
+		List<String> bookPushkinAuthor = new ArrayList<>();
+		bookPushkinAuthor.add("Александ Пушкин");
+		Book bookPushkin = new Book("Сборник стихов Пушкина", bookPushkinAuthor, "SN-2", "Проза");
+		List<String> bookBulichowAuthor = new ArrayList<>();
+		bookBulichowAuthor.add("Александ Пушкин");
+		Book bookBulichowElement = new Book("Приключения Алисы", bookBulichowAuthor, "SN-3", "Фантастика");
+		List<String> bookImagineAuthor = new ArrayList<>();
+		bookImagineAuthor.add("Иван Иванов");
+		bookImagineAuthor.add("Петр Петров");
+		Book bookImagineElement = new Book("Все обо всем", bookImagineAuthor, "SN-4", "Фантастика");
+		books.add(shildtBook);
+		books.add(bookPushkin);
+		books.add(bookBulichowElement);
+		books.add(bookImagineElement);
 	}
 	
 	private Document makeLibrary0(File destination, List<Book> books) throws SAXException, ParserConfigurationException {
@@ -265,11 +293,19 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.newDocument();
 		Element libraryElement = makeLibraryElement(document);
+		for(Book book : books) {
+			Element bookElement = makeBookElement(document, book);
+			libraryElement.appendChild(bookElement);
+		}
+		document.appendChild(libraryElement);
+		return document;
 	}
 	
 	private Element makeLibraryElement(Document document) {
 		Element rootElement = document.createElement("library");
 		rootElement.setAttribute("lib_name", "New library");
+		rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		rootElement.setAttribute("xsi:noNamespaceSchemaLocation", "LibraryXSD.xsd");
 		return rootElement;
 	}
 	
@@ -288,13 +324,13 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 		return bookElement;
 	}
 
-	private void saveLibrary(Document document, File destination) throws FileNotFoundException, TransformerException {
+	private void saveLibrary(Document document, File destination, String method) throws FileNotFoundException, TransformerException {
 		DOMSource domSource = new DOMSource(document);
 		StreamResult streamResult = new StreamResult(new FileOutputStream(destination));
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+		transformer.setOutputProperty(OutputKeys.METHOD, method);
 		transformer.transform(domSource, streamResult);
 	}
 	
@@ -319,10 +355,8 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 			xPathNodes = searchBookNodes(source, "author", author);
 			return composeAllBooks(xPathNodes);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();
@@ -337,10 +371,8 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 			xPathNodes = searchBookNodes(source, "title", title);
 			return composeAllBooks(xPathNodes);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();
@@ -388,8 +420,43 @@ public class LibraryDocumentHandlerDOM extends LibraryDocumentHandler {
 	}
 
 	@Override
-	protected void transformDoument(File source, File destination) {
-		// TODO Auto-generated method stub
-		
+	protected void transformDoument(File documentXML, File documentXSLT, File destination) {
+		try {
+			transformDocument0(documentXML, documentXSLT, destination);
+			System.out.println("Transformation succeed");
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void transformDocument0(File documentXML, File documentXSLT, File destination) throws TransformerException {
+		StreamSource documentXMLSource = new StreamSource(documentXML);
+		StreamSource documentXSLTSource = new StreamSource(documentXSLT);
+		StreamResult documentHTMLResult = new StreamResult(destination);
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer(documentXSLTSource);
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty(OutputKeys.METHOD, "html");
+		transformer.transform(documentXMLSource, documentHTMLResult);
+	}
+
+	@Override
+	protected boolean isValidate(File documentFile, File schemaFile) {
+		return isValidate0(documentFile, schemaFile);
+	}
+	
+	private boolean isValidate0(File documentFile, File schemaFile) {
+		Source documentSource = new StreamSource(documentFile);
+		SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
+		try {
+			Schema schema = schemaFactory.newSchema(schemaFile);
+			Validator validator = schema.newValidator();
+			validator.validate(documentSource);
+			System.out.println("Document is correct");
+			return true;
+		} catch (SAXException | IOException e) {	
+			System.err.println("Document isn't correct: " + e.getMessage());
+			return false;
+		} 
 	}
 }

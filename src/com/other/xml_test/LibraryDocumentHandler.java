@@ -21,7 +21,8 @@ public abstract class LibraryDocumentHandler {
 	protected abstract Element searchBookElement(File source, String id) throws XPathException;
 	protected abstract List<Book> searchBookByAuthor(File source, String author);
 	protected abstract List<Book> searchBookByTitle(File source, String title);
-	protected abstract void transformDoument(File source, File destination);
+	protected abstract void transformDoument(File documentXML, File documentXSLT, File destination);
+	protected abstract boolean isValidate(File document, File schema);
 	
 	protected void printBooks(List<Book> books) {
 		books.stream().forEach(book -> System.out.println(book));
