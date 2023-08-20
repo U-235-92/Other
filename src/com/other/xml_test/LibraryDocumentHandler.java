@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import javax.xml.xpath.XPathException;
-import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Element;
 
