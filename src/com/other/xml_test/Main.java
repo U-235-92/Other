@@ -54,6 +54,7 @@ public class Main {
 		File documentXSLT = Paths.get("src/com/other/xml_test/LibraryXSLT.xsl").toFile();
 		LibraryDocumentHandler staxHandler = new LibraryDocumentHandlerSTAX();
 //		staxHandler.printBooksOfLibrary(sourceDocumentXML);
-		staxHandler.addBook(sourceDocumentXML, copyDocumentXML, initBook());
+//		staxHandler.addBook(sourceDocumentXML, copyDocumentXML, initBook());
+		staxHandler.editBook(sourceDocumentXML, copyDocumentXML, null, null, null, null);
 	}
 }
