@@ -10,7 +10,8 @@ public class Main {
 	public static void main(String[] args) {
 		//TEST
 //		testDOM();
-		testSTAX();
+//		testSTAX();
+		testJAXB();
 	}
 	
 	@SuppressWarnings("unused")
@@ -60,8 +61,8 @@ public class Main {
 	
 	@SuppressWarnings("unused")
 	private static void testJAXB() {
+		File carDocumentXML = Paths.get("src/com/other/xml_test/LibraryXSLT.xsl").toFile();
 		TestJAXB testJAXB = new TestJAXB();
-		testJAXB.testMarshal();
-		testJAXB.testUnmarshal();
+		testJAXB.testMarshalCar(new Car("BMV", "M5", CarType.SPORT, 100), carDocumentXML);
 	}
 }

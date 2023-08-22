@@ -1,17 +1,23 @@
 package com.other.xml_test;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
 
 	private String manufacturer;
 	private String model;
+	@XmlAttribute
 	private CarType type;
+	@XmlAttribute
 	private int price;
 	
 	public Car() {
 		super();
 	}
 
-	public Car(String manufacturer, String model, CarType type, int price) {
+	public Car(String manufacturer, String model, CarType type,  int price) {
 		super();
 		this.manufacturer = manufacturer;
 		this.model = model;
