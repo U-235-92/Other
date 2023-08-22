@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
@@ -273,28 +275,62 @@ public class LibraryDocumentHandlerSTAX extends LibraryDocumentHandler {
 		}
 	}
 
+	private boolean isProcessEditBook = false;
+	private String startElementName = null;
+	
 	private void editBook0(File source, File destination, String id, String typeEdit, String titleEdit,
 			List<String> authorsEdit) throws XMLStreamException, IOException, TransformerException {
 		XMLEventReader eventReader = getEventReader(source);
 		XMLEventWriter eventWriter = getEventWriter();
+		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 		while(eventReader.hasNext()) {
 			XMLEvent event = eventReader.nextEvent();
 			if(event.isStartElement()) {
-//				handleWriteStartElement(event, streamWriter, book);
-				eventWriter.add(event);
+				StartElement element = event.asStartElement();
+				startElementName = element.getName().getLocalPart();
+				if(element.getName().getLocalPart().equals("book")) {
+					String incommingId = element.getAttributeByName(new QName("id")).getValue();
+					if(incommingId.equals(id)) {
+						isProcessEditBook = true;
+						eventWriter.add(eventFactory.createStartElement("", "", "book"));
+						eventWriter.add(eventFactory.createAttribute(new QName("id").getLocalPart(), incommingId));
+						eventWriter.add(eventFactory.createAttribute(new QName("type"), typeEdit != null ? typeEdit : element.getAttributeByName(new QName("type")).getValue()));
+						eventWriter.add(eventFactory.createEndElement("", "", "book"));
+					} else {
+						eventWriter.add(event);
+					}				
+				} else {
+					eventWriter.add(event);
+				}
 			} else if(event.isCharacters()) {
-//				handleWriteCharacters(event, streamWriter);
+				Characters characters = event.asCharacters();
+				if(startElementName.equals("title")) {
+					eventWriter.add(eventFactory.createCharacters(titleEdit != null ? titleEdit : characters.getData()));
+				} else if(startElementName.equals("author")) {
+					if(authorsEdit != null && authorsEdit.size() != 0) {
+						String author = authorsEdit.get(0);
+						eventWriter.add(eventFactory.createCharacters(author != null ? author : characters.getData()));
+						authorsEdit.remove(0);
+					}
+				}
 				eventWriter.add(event);
 			} else if(event.isEndElement()) {
-//				handleWriteEndElement(streamWriter);
-				eventWriter.add(event);
+				EndElement element = event.asEndElement();
+				if(element.getName().getLocalPart().equals("book")) {
+					if(isProcessEditBook)  {
+						isProcessEditBook = false;
+						eventWriter.add(eventFactory.createEndElement("", "", "book"));
+					}
+				} else {					
+					eventWriter.add(event);
+				}
 			}
 		}
 		eventReader.close();
 		eventWriter.close();
 		String xml = new String(baos.toByteArray());
-		baos.close();
 		formatWrite(xml, destination);
+		baos.close();
 	}
 	
 	@Override
