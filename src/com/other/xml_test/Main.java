@@ -57,4 +57,11 @@ public class Main {
 //		staxHandler.addBook(sourceDocumentXML, copyDocumentXML, initBook());
 		staxHandler.editBook(sourceDocumentXML, copyDocumentXML, null, null, null, null);
 	}
+	
+	@SuppressWarnings("unused")
+	private static void testJAXB() {
+		TestJAXB testJAXB = new TestJAXB();
+		testJAXB.testMarshal();
+		testJAXB.testUnmarshal();
+	}
 }
