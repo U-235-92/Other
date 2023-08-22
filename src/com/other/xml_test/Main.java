@@ -57,4 +57,11 @@ public class Main {
 		staxHandler.addBook(sourceDocumentXML, copyDocumentXML, initBook());
 		staxHandler.editBook(copyDocumentXML, copyDocumentXML, "BN-99", null, "Вечный зов. Том 1", null);
 	}
+	
+	@SuppressWarnings("unused")
+	private static void testJAXB() {
+		TestJAXB testJAXB = new TestJAXB();
+		testJAXB.testMarshal();
+		testJAXB.testUnmarshal();
+	}
 }
