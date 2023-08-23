@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 public class TestJAXB {
 
@@ -27,7 +28,7 @@ public class TestJAXB {
 		JAXBContext context = JAXBContext.newInstance(Car.class, CarShop.class, CarType.class);
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.marshal(carShop, System.out);
+		marshaller.marshal(carShop, fos);
 		fos.close();
 	}
 	
@@ -48,11 +49,38 @@ public class TestJAXB {
 		JAXBContext context = JAXBContext.newInstance(Car.class);
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.marshal(car, System.out);
+		marshaller.marshal(car, fos);
 		fos.close();
 	}
 	
-	public void testUnmarshal() {
-		
+	public void testUnmarshalCar(File source) {
+		try {
+			testUnmarshalCar0(source);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void testUnmarshalCar0(File source) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Car.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		Car car = (Car) unmarshaller.unmarshal(source);
+		System.out.println(car);
+	}
+	
+	public void testUnmarshalCarShop(File source) {
+		try {
+			testUnmarshalCarShop0(source);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void testUnmarshalCarShop0(File source) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(CarShop.class, CarType.class, Car.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		CarShop carShop = (CarShop) unmarshaller.unmarshal(source);
+		System.out.println(carShop);
 	}
 }

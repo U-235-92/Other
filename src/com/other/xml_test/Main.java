@@ -61,8 +61,18 @@ public class Main {
 	
 	@SuppressWarnings("unused")
 	private static void testJAXB() {
-		File carDocumentXML = Paths.get("src/com/other/xml_test/LibraryXSLT.xsl").toFile();
+		List<Car> cars = new ArrayList<>();
+		Car bmwM5 = new Car("BMV", "M5", CarType.SPORT, 100);
+		Car mercedessMclaren = new Car("Mercedess", "Mclaren", CarType.SPORT, 250);
+		cars.add(bmwM5);
+		cars.add(mercedessMclaren);
+		CarShop carShop = new CarShop("My car shop", "89995558822", cars);
+		File carDocumentXML = Paths.get("src/com/other/xml_test/CarDocument.xml").toFile();
+		File carShopDocumentXML = Paths.get("src/com/other/xml_test/CarShopDocument.xml").toFile();
 		TestJAXB testJAXB = new TestJAXB();
-		testJAXB.testMarshalCar(new Car("BMV", "M5", CarType.SPORT, 100), carDocumentXML);
+//		testJAXB.testMarshalCarShop(carShop, carShopDocumentXML);
+//		testJAXB.testMarshalCar(mercedessMclaren, carDocumentXML);
+//		testJAXB.testUnmarshalCar(carDocumentXML);
+		testJAXB.testUnmarshalCarShop(carShopDocumentXML);
 	}
 }
