@@ -12,6 +12,7 @@ public class MainSimpleJsonGoogle {
 		File customLibFile = Path.of("src/com/other/json_test/files/CustomLibraryJSON.json").toFile();
 		SimpleJsonGoogle simpleJsonGoogle = new SimpleJsonGoogle();
 //		simpleJsonGoogle.printBooks(copyLibFile);
-		simpleJsonGoogle.printDocument(copyLibFile);
+//		simpleJsonGoogle.printDocument(copyLibFile);
+		simpleJsonGoogle.printJsonObject(simpleJsonGoogle.makeJson());
 	}
 }

@@ -66,7 +66,20 @@ public class SimpleJsonGoogle {
 		}
 	}
 	
-	public JSONObject makeLibrary() {
-		return null;
+	@SuppressWarnings("unchecked")
+	public JSONObject makeJson() {
+		JSONObject studentObj = new JSONObject();
+		studentObj.put("name", "Nikolai");
+		studentObj.put("stage", "5");
+		JSONArray gradeArr = new JSONArray();
+		gradeArr.add(100);
+		gradeArr.add(90);
+		gradeArr.add(80);
+		studentObj.put("grades", gradeArr);
+		return studentObj;
+	}
+	
+	public void printJsonObject(JSONObject obj) {
+		System.out.println(obj.toJSONString());
 	}
 }
