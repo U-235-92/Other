@@ -8,14 +8,14 @@ import java.util.List;
 
 import com.other.json_test.obj.Book;
 
-public class MainSimpleJSON {
+public class MainSimpleJsonJavax {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws IOException {
 		File originLibFile = Path.of("src/com/other/json_test/files/LibraryJSON.json").toFile();
 		File copyLibFile = Path.of("src/com/other/json_test/files/CopyLibraryJSON.json").toFile();
 		File customLibFile = Path.of("src/com/other/json_test/files/CustomLibraryJSON.json").toFile();
-		SimpleJSON simpleJSON = new SimpleJSON();
+		SimpleJsonJavax simpleJSON = new SimpleJsonJavax();
 //		simpleJSON.getCopyDocument(originLibFile, copyLibFile);
 //		simpleJSON.printObject(simpleJSON.testMakeDocument());
 //		simpleJSON.printObject(simpleJSON.readObject(originLibFile));

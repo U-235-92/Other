@@ -20,7 +20,7 @@ import javax.json.stream.JsonParser.Event;
 
 import com.other.json_test.obj.Book;
 
-public class SimpleJSON {
+public class SimpleJsonJavax {
 
 	public JsonObject testMakeDocument() {
 		JsonObject obj = Json.createObjectBuilder().add("library", Json.createObjectBuilder().add("lib_name", "New library")
