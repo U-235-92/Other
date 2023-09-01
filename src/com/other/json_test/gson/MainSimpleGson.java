@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 import com.other.json_test.obj.Book;
+import com.other.json_test.obj.Cat;
 import com.other.json_test.obj.Ticket;
 import com.other.json_test.obj.TicketType;
 
@@ -22,13 +23,16 @@ public class MainSimpleGson {
 		File originLibFile = Path.of("src/com/other/json_test/files/LibraryJSON.json").toFile();
 		File copyLibFile = Path.of("src/com/other/json_test/files/CopyLibraryJSON.json").toFile();
 		File customLibFile = Path.of("src/com/other/json_test/files/CustomLibraryJSON.json").toFile();
+		File catFile = Path.of("src/com/other/json_test/files/CatJSON.json").toFile();
 		SimpleGson simpleGson = new SimpleGson();
 //		simpleGson.makeAndPrintStringJson();
 //		simpleGson.makeAndPrintBookJson();
 //		simpleGson.makeAndPrintStudentJson();
 //		simpleGson.makeAndPrintTicketJson(makeTicket());
-		simpleGson.printBooksAsStream(originLibFile);
+//		simpleGson.printBooksAsStream(originLibFile);
 //		simpleGson.printBooksAsDocument(originLibFile);
+		simpleGson.printDocumentAsStream(catFile, Cat.class, null);
+//		simpleGson.printDocumentAsStream(originLibFile, Book.class, "book");
 //		simpleGson.crudBookAndPrintDocument(copyLibFile, new Book("BN-89", "type", "title", new ArrayList<>()));
 	}
 	

@@ -1,0 +1,20 @@
+
+    [
+        {
+            "age": 5,
+            "name": "Darsy",
+            "color": [
+                "brown",
+                "white",
+                "red"
+            ]
+        },
+        {
+            "age": 2,
+            "name": "Murzik",
+            "color": [
+                "black",
+                "white"
+            ]
+        }
+    ]

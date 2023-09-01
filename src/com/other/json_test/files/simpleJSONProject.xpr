@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <meta>
+        <filters directoryPatterns="" filePatterns="\QsimpleJSONProject.xpr\E" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options/>
+    </meta>
+    <projectTree name="simpleJSONProject.xpr">
+        <folder name="other">
+            <file name="CatJSON.json"/>
+            <file name="Untitled.json"/>
+        </folder>
+        <folder path="."/>
+    </projectTree>
+</project>

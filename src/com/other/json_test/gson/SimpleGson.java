@@ -1,10 +1,13 @@
 package com.other.json_test.gson;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.other.json_test.obj.Book;
+import com.other.json_test.obj.Cat;
 import com.other.json_test.obj.Student;
 import com.other.json_test.obj.Ticket;
 
@@ -118,10 +122,6 @@ public class SimpleGson {
 		}
 	}
 
-	public void crudBookAndPrintAsStream(File source, Book book) {
-		
-	}
-	
 	public void crudBookAndPrintAsDocument(File source, Book book) {
 		try (FileReader fr = new FileReader(source)) {
 			JsonReader reader = new JsonReader(fr);
@@ -144,7 +144,7 @@ public class SimpleGson {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void createBookAsDocument(JsonArray booksArray, Book book) {
 		JsonObject bookDetails = new JsonObject();
 		bookDetails.add("id", new JsonPrimitive(book.getId()));
@@ -157,13 +157,13 @@ public class SimpleGson {
 		bookObject.add("book", bookDetails);
 		booksArray.add(bookObject);
 	}
-	
+
 	private void editBookAsDocument(JsonArray bookArray) {
 		String idEdit = "BN-4";
-		for(JsonElement bookElement : bookArray) {
+		for (JsonElement bookElement : bookArray) {
 			JsonObject bookObject = bookElement.getAsJsonObject().get("book").getAsJsonObject();
 			String bookId = bookObject.get("id").getAsString();
-			if(bookId.equals(idEdit)) {
+			if (bookId.equals(idEdit)) {
 				Map<String, JsonElement> bookMap = bookObject.asMap();
 				bookMap.put("type", new JsonPrimitive("Наука и техника"));
 				JsonArray authorsArr = bookMap.get("authors").getAsJsonArray();
@@ -173,76 +173,62 @@ public class SimpleGson {
 			}
 		}
 	}
-	
+
 	private void removeBookAsDocument(JsonArray bookArray) {
 		String idRemove = "BN-5";
 		int index = -1;
-		for(JsonElement bookElement : bookArray) {
+		for (JsonElement bookElement : bookArray) {
 			index++;
 			JsonObject bookObject = bookElement.getAsJsonObject().get("book").getAsJsonObject();
 			String bookId = bookObject.get("id").getAsString();
-			if(bookId.equals(idRemove)) {
+			if (bookId.equals(idRemove)) {
 				break;
 			}
 		}
-		if(index != -1) {			
+		if (index != -1) {
 			bookArray.remove(index);
 		}
 	}
-	
+
 	private void printElement(JsonElement element) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();
 		Gson gson = gsonBuilder.create();
 		System.out.println(gson.toJson(element));
 	}
-	
+
 	public void printBooksAsStream(File source) {
 		List<Book> books = new ArrayList<>();
-		try (FileReader fr = new FileReader(source); 
-				JsonReader reader = new JsonReader(fr)) {
-			String id = null;
-			String type = null;
-			String title = null;
-			String fieldName = null;
-			while (reader.hasNext()) {
-				JsonToken token = reader.peek();
-				if (token == JsonToken.NAME) {
-					fieldName = reader.nextName();
-//					System.out.println(fieldName);
-				} else if (token == JsonToken.STRING) {
-					String value = reader.nextString();
-					if ("id".equals(fieldName)) {
-						id = value;
-					} else if ("type".equals(fieldName)) {
-						type = value;
-					} else if ("title".equals(fieldName)) {
-						title = value;
-					}
-				} else if (token == JsonToken.BEGIN_ARRAY) {
-					reader.beginArray();
-					if ("authors".equals(fieldName)) {
-						List<String> authors = new ArrayList<>();
-						while (reader.hasNext()) {
-							if (reader.peek() == JsonToken.STRING) {
-								String author = reader.nextString();
-								authors.add(author);
-							}
-						}
-						Book book = new Book();
-						book.setAuthors(authors);
-						book.setId(id);
-						book.setTitle(title);
-						book.setType(type);
+		try (FileReader fr = new FileReader(source); JsonReader jsonReader = new JsonReader(fr)) {
+			String lastReadElementName = "";
+			boolean isPrintBook = false;
+			while (jsonReader.hasNext()) {
+				JsonToken token = jsonReader.peek();
+				if (token.equals(JsonToken.BEGIN_OBJECT)) {
+					if (isPrintBook) {
+						Gson gson = new GsonBuilder().setPrettyPrinting().create();
+						Book book = gson.fromJson(jsonReader, Book.class);
 						books.add(book);
+						isPrintBook = false;
+						jsonReader.endObject();
+					} else {
+						jsonReader.beginObject();
 					}
-				} else if (token == JsonToken.END_ARRAY) {
-					reader.endArray();
-				} else if (token == JsonToken.BEGIN_OBJECT) {
-					reader.beginObject();
-				} else if (token == JsonToken.END_OBJECT) {
-					reader.endObject();
+				} else if (token.equals(JsonToken.END_OBJECT)) {
+					jsonReader.endObject();
+				} else if (token.equals(JsonToken.BEGIN_ARRAY)) {
+					jsonReader.beginArray();
+				} else if (token.equals(JsonToken.END_ARRAY)) {
+					jsonReader.endArray();
+				} else if (token.equals(JsonToken.NAME)) {
+					lastReadElementName = jsonReader.nextName();
+					if ("book".equals(lastReadElementName)) {
+						isPrintBook = true;
+					}
+				} else {
+					jsonReader.skipValue();
 				}
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -253,6 +239,40 @@ public class SimpleGson {
 			books.forEach(book -> System.out.println(book));
 		} else {
 			System.out.println("No book found");
+		}
+	}
+
+	public <T> void printDocumentAsStream(File source, Class<T> clazz, String keyElelementName) {
+		try (FileInputStream fis = new FileInputStream(source);
+				InputStreamReader isr = new InputStreamReader(fis);
+				JsonReader jsonReader = new JsonReader(isr)) {
+			String lastReadElementName = "";
+			while (jsonReader.hasNext()) {
+				JsonToken token = jsonReader.peek();
+				if (token.equals(JsonToken.BEGIN_OBJECT)) {
+					if (keyElelementName == null || lastReadElementName.equals(keyElelementName)) {
+						Gson gson = new GsonBuilder().setPrettyPrinting().create();
+						T obj = gson.fromJson(jsonReader, clazz);
+						System.out.println(obj);
+					} else {
+						jsonReader.beginObject();
+					}
+				} else if (token.equals(JsonToken.END_OBJECT)) {
+					jsonReader.endObject();
+				} else if (token.equals(JsonToken.BEGIN_ARRAY)) {
+					jsonReader.beginArray();
+				} else if (token.equals(JsonToken.END_ARRAY)) {
+					jsonReader.endArray();
+				} else if (token.equals(JsonToken.NAME)) {
+					lastReadElementName = jsonReader.nextName();
+				} else {
+					jsonReader.skipValue();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
