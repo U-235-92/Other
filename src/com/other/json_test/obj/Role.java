@@ -8,6 +8,7 @@ public enum Role {
 	MANAGER(1, 100), PRINCIPAL(2, 200), WORKER(3, 300);
 	
 	private int id;
+//	@JsonValue
 	private int addition;
 	
 	Role(int id, int addition) {

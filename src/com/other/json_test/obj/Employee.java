@@ -10,6 +10,8 @@ public class Employee {
 	@JsonAnySetter
 	private Map<String, Object> properties;
 	private List<String> phones;
+//	@JsonRawValue
+//	@JsonValue
 	private String name;
 	@JsonProperty("OLD_NAME")
 	private String changeMyNameWhenRead;
@@ -19,6 +21,7 @@ public class Employee {
 	@JsonIgnore
 	private int noSaveData;
 	private Role role;
+//	@JsonUnwrapped
 	private Addres addres;
 	
 	public Employee() {
@@ -47,6 +50,7 @@ public class Employee {
 		this.noSaveData = noSaveData;
 	}
 
+//	@JsonGetter("ABGDEF")
 	public String getChangeMyNameWhenRead() {
 		return changeMyNameWhenRead;
 	}
@@ -63,6 +67,7 @@ public class Employee {
 		this.changeMyNameWhenWrite = changeMyNameWhenWrite;
 	}
 
+//	@JsonAnyGetter(enabled = true)
 	public Map<String, Object> getProperties() {
 		return properties;
 	}
@@ -95,6 +100,8 @@ public class Employee {
 		this.age = age;
 	}
 
+//	@JsonValue
+//	@JsonRawValue
 	public Role getRole() {
 		return role;
 	}
@@ -112,6 +119,7 @@ public class Employee {
 	}
 
 	@Override
+//	@JsonValue
 	public String toString() {
 		return "Employee [noSaveData=" + noSaveData + ", changeMyNameWhenRead=" + changeMyNameWhenRead
 				+ ", changeMyNameWhenWrite=" + changeMyNameWhenWrite + ", properties=" + properties + ", phones="

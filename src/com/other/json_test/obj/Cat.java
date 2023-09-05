@@ -2,10 +2,20 @@ package com.other.json_test.obj;
 
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@SuppressWarnings("unused")
+@JsonAutoDetect(creatorVisibility = Visibility.ANY)
 public class Cat {
 
+//	@JsonProperty
 	private int age;
+//	@JsonProperty
 	private String name;
+//	@JsonProperty
 	private String[] color;
 	
 	public Cat() {
