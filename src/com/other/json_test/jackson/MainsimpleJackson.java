@@ -10,6 +10,11 @@ public class MainsimpleJackson {
 //		simpleJackson.privateObjectToJson();
 //		simpleJackson.printCatsAsBind();
 //		simpleJackson.crudOperationsAsDocument();
-		simpleJackson.testTreeOperations();
+//		simpleJackson.testTreeOperations();
+//		simpleJackson.lookAtEmployeeStructure();
+//		simpleJackson.printCats();
+//		simpleJackson.employeeStreamReadTest();
+//		simpleJackson.printSimpleCatStream();
+		simpleJackson.printSimpleCatStreamAnotherWay();
 	}
 }
