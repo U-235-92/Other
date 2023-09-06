@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
@@ -18,7 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ValueNode;
 import com.other.json_test.obj.Addres;
 import com.other.json_test.obj.Cat;
 import com.other.json_test.obj.Employee;
@@ -149,7 +152,7 @@ public class SimpleJackson {
 
 	private void addCat(JsonNode root, ObjectMapper objectMapper) {
 		ObjectNode catNode1 = objectMapper.createObjectNode();
-		catNode1.putPOJO("", new Cat(10, "Test", new String[] {"Red"}));
+		catNode1.putPOJO("test", new Cat(14, "Test", new String[] {"Red"}));
 		ObjectNode catNode2 = objectMapper.createObjectNode();
 		catNode2.put("age", 10);
 		catNode2.put("name", "Murlika");
@@ -161,6 +164,21 @@ public class SimpleJackson {
 			ArrayNode arrayNode = (ArrayNode) root;
 //			arrayNode.add(catNode1);
 			arrayNode.add(catNode2);
+		}
+		System.out.println("VALUE NODE " + root.isValueNode());
+		try {
+			JsonNode n = catNode1.get("test");
+			System.out.println(n.getNodeType());
+			objectMapper.writeValue(System.out, n.get("age"));
+		} catch (StreamWriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DatabindException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
