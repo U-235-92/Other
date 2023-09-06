@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -183,16 +185,65 @@ public class SimpleJackson {
 	}
 
 	private void editCat(JsonNode root, ObjectMapper objectMapper) {
-		
+		if(root.getNodeType() == JsonNodeType.ARRAY) {
+			String oldValue = "Murzik";
+			String newValue = "Matroskin";
+			ArrayNode arrNode = (ArrayNode) root;
+			for(JsonNode node : arrNode) {
+				if(node.get("name").textValue().equals(oldValue)) {
+					if(node.getNodeType() == JsonNodeType.OBJECT) {
+						ObjectNode obj = (ObjectNode) node;
+						obj.put("name", newValue);
+					}
+				}
+			}
+		}
 	}
 
 	private void removeCat(JsonNode root, ObjectMapper objectMapper) {
-		
+		if(root.getNodeType() == JsonNodeType.ARRAY) {
+			String removeValue = "Test";
+			ArrayNode arrNode = (ArrayNode) root;
+			int index = 0;
+			for(JsonNode node : arrNode) {
+				if(node.get("name").textValue().equals(removeValue)) {
+					break;
+				}
+				index++;
+			}
+			arrNode.remove(index);
+		}
 	}
 
 	private void printResult(JsonNode root, ObjectMapper objectMapper) {
 		try {
 			objectMapper.writeValue(System.out, root);
+		} catch (StreamWriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DatabindException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testTreeOperations() {
+		Cat cat = new Cat(10, "Smart", new String[] {"red", "brown"});
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		JsonNode node = mapper.convertValue(cat, JsonNode.class);
+		((ObjectNode) node).remove("age");
+		System.out.println(node.get("name").asText());
+		Iterator<Entry<String, JsonNode>> fields = node.fields();
+		while(fields.hasNext()) {
+			Entry<String, JsonNode> field = fields.next();
+			System.out.println(field);
+		}
+		try {
+			mapper.writeValue(System.out, node);
 		} catch (StreamWriteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

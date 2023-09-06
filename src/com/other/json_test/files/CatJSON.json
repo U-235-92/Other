@@ -16,5 +16,13 @@
                 "black",
                 "white"
             ]
+        },
+        {
+            "age": -1,
+            "name": "Test",
+            "color": [
+                "black",
+                "white"
+            ]
         }
     ]

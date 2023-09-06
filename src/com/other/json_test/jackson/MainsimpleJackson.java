@@ -9,6 +9,7 @@ public class MainsimpleJackson {
 //		simpleJackson.jsonToEmployeeAndPrint();
 //		simpleJackson.privateObjectToJson();
 //		simpleJackson.printCatsAsBind();
-		simpleJackson.crudOperationsAsDocument();
+//		simpleJackson.crudOperationsAsDocument();
+		simpleJackson.testTreeOperations();
 	}
 }
