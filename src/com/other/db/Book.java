@@ -5,24 +5,20 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
-import javax.swing.ImageIcon;
-
 public class Book {
 
 	private String title;
 	private String isbn;
-	private ImageIcon cover;
 	private List<String> authors;
 	private double price;
 	
 	private Locale locale = Locale.getDefault();
 	private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 	
-	public Book(String title, String isbn, ImageIcon cover, List<String> authors, double price) {
+	public Book(String title, String isbn, List<String> authors, double price) {
 		super();
 		this.title = title;
 		this.isbn = isbn;
-		this.cover = cover;
 		this.authors = authors;
 		this.price = price;
 	}
@@ -33,10 +29,6 @@ public class Book {
 	
 	public String getIsbn() {
 		return isbn;
-	}
-	
-	public ImageIcon getCover() {
-		return cover;
 	}
 	
 	public List<String> getAuthors() {
