@@ -60,6 +60,7 @@ public class ConnectionDriver {
 	public void postRequest() throws MalformedURLException, IOException {
 		URL url = new URL("https://postman-echo.com/post");
 		URLConnection connection = url.openConnection();
+		connection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		connection.setDoOutput(true);
 		PrintWriter pw = new PrintWriter(connection.getOutputStream());
 		pw.print("foo1=" + URLEncoder.encode("bar1", Charset.defaultCharset()) + "&");
@@ -75,7 +76,7 @@ public class ConnectionDriver {
 	public static void main(String[] args) throws MalformedURLException, IOException {
 		ConnectionDriver driver = new ConnectionDriver();
 //		driver.getRequestWithoutParam();
-//		driver.getRequestWithParam();
-		driver.postRequest();
+		driver.getRequestWithParam();
+//		driver.postRequest();
 	}
 }
