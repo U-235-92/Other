@@ -1,5 +1,6 @@
 package com.other.completablefuture;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Shop {
@@ -17,6 +18,13 @@ public class Shop {
 	public double getPriceFor(String product) {
 		delay();
 		return Math.random() * 1000;
+	}
+	
+	public String getDiscountPrice(String product) {
+		double price = getPriceFor(product);
+		Discount code = Discount.values()[new Random().nextInt(Discount.values().length)];
+//		return String.format("%s:%.2f:%s", name, price, code);
+		return new String(name + ":" + price + ":" + code);
 	}
 	
 	private void delay() {
