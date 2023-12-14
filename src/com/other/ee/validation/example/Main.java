@@ -15,13 +15,15 @@ public class Main {
 	public static void main(String[] args) {
 //		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		ValidatorFactory factory = Validation.byDefaultProvider().configure().
-				messageInterpolator(new ResourceBundleMessageInterpolator(new PlatformResourceBundleLocator( "/Other/src/com/other/ee/validation/example/MyValidationMessages" ))).buildValidatorFactory();
+				messageInterpolator(new ResourceBundleMessageInterpolator(new PlatformResourceBundleLocator( "ValidationMessages" ))).
+				buildValidatorFactory();
 		Validator validator = factory.getValidator();
 		ValidObject validObject = getValidObject();
 		Set<ConstraintViolation<ValidObject>> violations = validator.validate(validObject);
 		violations.forEach(violation -> System.out.println(violation));
 	}
 
+	@SuppressWarnings("unused")
 	private static ValidObject getValidObject() {
 		int[] emptyArr = {};
 		int[] size5Arr = { 1, 2, 3, 4, 5 };
