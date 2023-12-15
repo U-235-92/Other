@@ -19,6 +19,7 @@ public class Main {
 		logger.log(Level.INFO, "All motorcycles before INSERT operations");
 		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
 		putMotorcycleIntoDB(makeMotorcycle(400, 150, "Yamaha", "SR400"), entityManager);
+		putMotorcycleIntoDB(makeMotorcycle(400, 150, "Honda", "SB400SS"), entityManager);
 		logger.log(Level.INFO, "All motorcycles after INSERT operations");
 		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
 		logger.log(Level.INFO, "Select Yamaha SR400");

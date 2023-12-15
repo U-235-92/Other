@@ -15,14 +15,14 @@ import jakarta.validation.constraints.NotNull;
 
 @SuppressWarnings("unused")
 @Entity
-@SequenceGenerator(name = "Fnc_generator")
+@SequenceGenerator(name = "seq_id")
 @NamedQueries({
 	@NamedQuery(name = "selectAllMotorcycles", query = "SELECT m FROM Motorcycle m"),
 	@NamedQuery(name = "selectYamahaSR400", query = "SELECT m FROM Motorcycle m WHERE m.model = 'SR400'")
 })
 public class Motorcycle {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO) 
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
 	private long id;
 	@NotMinusOrZero
 	private int engine;

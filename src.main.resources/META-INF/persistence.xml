@@ -11,8 +11,7 @@
 			<property name="jakarta.persistence.jdbc.url" value="jdbc:derby:memory:motorcycle;create=true"/>
 			<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
 			<property name="jakarta.persistence.sql-load-script-source" value="insert_motorcycles.sql"/>
-			<property name="jakarta.show_sql" value="true"/>
-			<property name="jakarta.hbm2ddl.auto" value="update"/>
+			<property name="eclipselink.logging.level" value="OFF"/>
 		</properties>
 	</persistence-unit>
 </persistence>

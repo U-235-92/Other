@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Dec 15 19:16:29 GMT+04:00 2023:
- РџСЂРѕРёР·РІРѕРґРёС‚СЃСЏ Р·Р°РіСЂСѓР·РєР° Derby РІРµСЂСЃРёРё The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): СЌРєР·РµРјРїР»СЏСЂ a816c00e-018c-6e0c-ea3d-000004adc710
-РІ РєР°С‚Р°Р»РѕРіРµ Р±Р°Р·С‹ РґР°РЅРЅС‹С… memory:E:\eclipse-workspace\Other\motorcycle jdk.internal.loader.ClassLoaders$AppClassLoader@55f96302 
+Sat Dec 16 01:34:13 GMT+04:00 2023:
+ Производится загрузка Derby версии The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): экземпляр a816c00e-018c-6f66-be1a-00001eb7bf70
+в каталоге базы данных memory:D:\Program Code\Java\workspace\Other\motorcycle jdk.internal.loader.ClassLoaders$AppClassLoader@33909752 
 
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.1+12-LTS-29
-user.dir=E:\eclipse-workspace\Other
+user.dir=D:\Program Code\Java\workspace\Other
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
-Р—Р°РїСѓС‰РµРЅ Р·Р°РіСЂСѓР·С‡РёРє РєР»Р°СЃСЃРѕРІ Р±Р°Р·С‹ РґР°РЅРЅС‹С… - derby.database.classpath=''
+Запущен загрузчик классов базы данных - derby.database.classpath=''
