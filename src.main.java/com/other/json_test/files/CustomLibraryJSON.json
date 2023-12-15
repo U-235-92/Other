@@ -1,0 +1,24 @@
+{
+	"library": {
+		"lib_name": "New library",
+		"books": [
+			{
+				"id": "BN-1",
+				"type": "Test",
+				"title": "Foo",
+				"authors": [
+					"Ivan Ivanov"
+				]
+			},
+			{
+				"id": "BN-2",
+				"type": "yo",
+				"title": "good",
+				"authors": [
+					"Ivan Ivanov",
+					"Petr Petrov"
+				]
+			}
+		]
+	}
+}

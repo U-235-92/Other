@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Dec 15 19:16:29 GMT+04:00 2023:
+ Производится загрузка Derby версии The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): экземпляр a816c00e-018c-6e0c-ea3d-000004adc710
+в каталоге базы данных memory:E:\eclipse-workspace\Other\motorcycle jdk.internal.loader.ClassLoaders$AppClassLoader@55f96302 
+
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.1+12-LTS-29
+user.dir=E:\eclipse-workspace\Other
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Запущен загрузчик классов базы данных - derby.database.classpath=''
