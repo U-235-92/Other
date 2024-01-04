@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence 
+<persistence version="3.0"
+	xmlns="https://jakarta.ee/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence 
              https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-	<persistence-unit name="motorcycle" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="motorcycle"
+		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.other.ee.jpa.motorcycle.Motorcycle</class>
 		<properties>
-			<property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.iapi.jdbc.AutoloadedDriver"/>
-			<property name="jakarta.persistence.jdbc.url" value="jdbc:derby:memory:motorcycle;create=true"/>
-			<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
-			<property name="jakarta.persistence.sql-load-script-source" value="insert_motorcycles.sql"/>
-			<property name="eclipselink.logging.level" value="OFF"/>
+			<property name="jakarta.persistence.jdbc.driver"
+				value="org.apache.derby.iapi.jdbc.AutoloadedDriver" />
+			<property name="jakarta.persistence.jdbc.url"
+				value="jdbc:derby:memory:motorcycle;create=true" />
+			<property
+				name="jakarta.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+			<property name="jakarta.persistence.sql-load-script-source"
+				value="insert_motorcycles.sql" />
+			<property name="eclipselink.logging.level" value="OFF" />
 		</properties>
 	</persistence-unit>
-	<persistence-unit name="shop">
-	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	<class>com.other.ee.jpa.motorcycle.Motorcycle</class>
+	<persistence-unit name="inheriting"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>com.other.ee.jpa.examples.Book</class>
+		<class>com.other.ee.jpa.examples.Item</class>
+		<class>com.other.ee.jpa.examples.ScaleModel</class>
+		<class>com.other.ee.jpa.examples.Boy</class>
+		<class>com.other.ee.jpa.examples.Toy</class>
+		<properties>
+			<property name="jakarta.persistence.jdbc.driver"
+				value="org.apache.derby.iapi.jdbc.AutoloadedDriver" />
+			<property name="jakarta.persistence.jdbc.url"
+				value="jdbc:derby:memory:shop;create=true" />
+			<property
+				name="jakarta.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+			<property name="eclipselink.logging.level" value="OFF" />
+		</properties>
 	</persistence-unit>
 </persistence>
