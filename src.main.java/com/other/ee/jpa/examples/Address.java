@@ -1,4 +1,4 @@
-package com.other.ee.jpa.shop.client;
+package com.other.ee.jpa.examples;
 
 import jakarta.persistence.Embeddable;
 
@@ -8,19 +8,20 @@ public class Address {
 	private String country;
 	private String city;
 	private String street;
-	private String house;
+	private String houseNumber;
 	private String zip;
 	
 	public Address() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Address(String country, String city, String street, String house, String zip) {
+	public Address(String country, String city, String street, String houseNumber, String zip) {
 		super();
 		this.country = country;
 		this.city = city;
 		this.street = street;
-		this.house = house;
+		this.houseNumber = houseNumber;
 		this.zip = zip;
 	}
 
@@ -48,12 +49,12 @@ public class Address {
 		this.street = street;
 	}
 
-	public String getHouse() {
-		return house;
+	public String getHouseNumber() {
+		return houseNumber;
 	}
 
-	public void setHouse(String house) {
-		this.house = house;
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	public String getZip() {
@@ -62,5 +63,11 @@ public class Address {
 
 	public void setZip(String zip) {
 		this.zip = zip;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [country=" + country + ", city=" + city + ", street=" + street + ", houseNumber=" + houseNumber
+				+ ", zip=" + zip + "]";
 	}
 }

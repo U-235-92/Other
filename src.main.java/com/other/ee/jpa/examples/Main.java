@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,12 @@ public class Main {
 		printEntityFromDB(entityManager, Book.class, "Select b from Book b");
 		saveBoy(entityManager);
 		printEntityFromDB(entityManager, Boy.class, "Select b from Boy b");
+		savePerson(entityManager);
+		printEntityFromDB(entityManager, Person.class, "Select p from Person p");
+		makeHouse(entityManager);
+		printEntityFromDB(entityManager, House.class, "Select h from House h");
+		saveChild(entityManager);
+		printEntityFromDB(entityManager, Child.class, "Select c from Child c");
 		entityManager.close();
 	}
 
@@ -54,6 +61,32 @@ public class Main {
 		entityManager.persist(boy);
 		entityManager.getTransaction().commit();
 		
+	}
+	
+	private static void savePerson(EntityManager entityManager) {
+		entityManager.getTransaction().begin();
+		PersonDetails details = new PersonDetails("Hello (:", Color.BLUE, null);
+		Person person = new Person("Mike", new Date(), details);
+		details.setPerson(person);
+		entityManager.persist(person);
+		entityManager.getTransaction().commit();
+	}
+	
+	private static void makeHouse(EntityManager entityManager) {
+		entityManager.getTransaction().begin();
+		Address address = new Address("Country", "City", "Street", "Number", "Zip");
+		House house = new House(100, 1, address);
+		entityManager.persist(house);
+		entityManager.getTransaction().commit();
+	}
+	
+	private static void saveChild(EntityManager entityManager) {
+		entityManager.getTransaction().begin();
+		Child child = new Child();
+		child.setParentFeature("Feature of PARENT");
+		child.setChildFeature("Feature of CHILD");
+		entityManager.persist(child);
+		entityManager.getTransaction().commit();
 	}
 	
 	private static void printEntityFromDB(EntityManager entityManager, Class<?> clazz, String jpql) {

@@ -29,6 +29,10 @@
 		<class>com.other.ee.jpa.examples.ScaleModel</class>
 		<class>com.other.ee.jpa.examples.Boy</class>
 		<class>com.other.ee.jpa.examples.Toy</class>
+		<class>com.other.ee.jpa.examples.Person</class>
+		<class>com.other.ee.jpa.examples.PersonDetails</class>
+		<class>com.other.ee.jpa.examples.House</class>
+		<class>com.other.ee.jpa.examples.Child</class>
 		<properties>
 			<property name="jakarta.persistence.jdbc.driver"
 				value="org.apache.derby.iapi.jdbc.AutoloadedDriver" />
