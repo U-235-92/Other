@@ -1,4 +1,4 @@
-package com.other.jaas_demo;
+package com.other.jaas.demo;
 
 import java.security.PrivilegedAction;
 
@@ -6,8 +6,8 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import com.other.jaas_demo.util.AccountPermission;
-import com.other.jaas_demo.util.SimpleCallbackHandler;
+import com.other.jaas.demo.util.AccountPermission;
+import com.other.jaas.demo.util.SimpleCallbackHandler;
 
 public class MainApp {
 

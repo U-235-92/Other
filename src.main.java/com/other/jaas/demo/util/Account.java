@@ -1,4 +1,4 @@
-package com.other.jaas_demo.util;
+package com.other.jaas.demo.util;
 
 import java.util.Arrays;
 import java.util.Objects;
