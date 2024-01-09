@@ -1,0 +1,20 @@
+grant {
+	permission javax.security.auth.AuthPermission "createLoginContext.Log_configuration";
+	permission javax.security.auth.AuthPermission "modifyPrincipals";
+	permission javax.security.auth.AuthPermission "doAsPrivileged";
+	permission javax.security.auth.AuthPermission "doAs";
+};
+
+grant principal com.other.jaas.accessor.authentication.LoginPrincipal "admin" {
+	permission com.other.jaas.accessor.authorization.AccountPermission "admin_act,group_act,common_act", "allow";
+};
+
+grant principal com.other.jaas.accessor.authentication.LoginPrincipal "group" {
+	permission com.other.jaas.accessor.authorization.AccountPermission "admin_act", "forbid";
+	permission com.other.jaas.accessor.authorization.AccountPermission "group_act,common_act", "allow";
+};
+
+grant principal com.other.jaas.accessor.authentication.LoginPrincipal "common" {
+	permission com.other.jaas.accessor.authorization.AccountPermission "admin_act,group_act", "forbid";
+	permission com.other.jaas.accessor.authorization.AccountPermission "common_act", "allow";
+};

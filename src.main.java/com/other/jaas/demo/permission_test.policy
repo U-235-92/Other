@@ -5,10 +5,10 @@ grant {
 	permission javax.security.auth.AuthPermission "doAs";
 };
 
-grant principal com.other.jaas_demo.util.RolePrincipal "admin" {
-	permission com.other.jaas_demo.util.AccountPermission "add", "allow";
+grant principal com.other.jaas.demo.util.RolePrincipal "admin" {
+	permission com.other.jaas.demo.util.AccountPermission "add", "allow";
 };
 
-grant principal com.other.jaas_demo.util.RolePrincipal "user" {
-	permission com.other.jaas_demo.util.AccountPermission "add", "prohibited";
+grant principal com.other.jaas.demo.util.RolePrincipal "user" {
+	permission com.other.jaas.demo.util.AccountPermission "add", "prohibited";
 };
