@@ -5,6 +5,10 @@
 	<groupId>aq.koptev.projects</groupId>
 	<artifactId>other</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>other_simple_ejb</module>
+	</modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
