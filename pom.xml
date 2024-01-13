@@ -7,7 +7,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>other_simple_ejb</module>
+		<module>other_plane_ejb</module>
+		<module>other_consumer_ejb</module>
+		<module>other_hello_ejb</module>
 	</modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>

@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @NamedQuery(name = Plane.FIND_ALL_PLANES, query = "Select plane From Plane plane")
@@ -24,9 +26,11 @@ public class Plane implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	@Column(name = "plane_model")
+	@NotNull @NotEmpty
 	private String model;
 	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	@JoinColumn(name = "mnf_fk", nullable = false)
+	@NotNull
 	private Manufacturer manufacturer;
 	
 	public Plane() {

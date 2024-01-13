@@ -1,0 +1,251 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< aq.koptev.projects:other_simple_ejb >-----------------
+[INFO] Building other_simple_ejb 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:3.1.1:java (default-cli) @ other_simple_ejb ---
+янв. 13, 2024 3:27:14 PM org.glassfish.ejb.embedded.EJBContainerProviderImpl getValidFile
+WARNING: ejb.embedded.instance_location_not_exists
+янв. 13, 2024 3:27:15 PM org.glassfish.ejb.embedded.EJBContainerProviderImpl createContainer
+INFO: [EJBContainerProviderImpl] Using runtime class: class com.sun.enterprise.glassfish.bootstrap.StaticGlassFishRuntime
+янв. 13, 2024 3:27:17 PM com.sun.enterprise.v3.server.CommonClassLoaderServiceImpl findDerbyClient
+INFO: Cannot find javadb client jar file, derby jdbc driver will not be available by default.
+янв. 13, 2024 3:27:17 PM com.sun.enterprise.v3.services.impl.GrizzlyService createNetworkProxy
+INFO: Network listener http-listener on port 0 disabled per domain.xml
+янв. 13, 2024 3:27:17 PM com.sun.enterprise.v3.services.impl.GrizzlyService createNetworkProxy
+INFO: Network listener https-listener on port 0 disabled per domain.xml
+янв. 13, 2024 3:27:18 PM org.hibernate.validator.internal.util.Version <clinit>
+INFO: HV000001: Hibernate Validator null
+янв. 13, 2024 3:27:19 PM org.glassfish.security.services.impl.authorization.AuthorizationServiceImpl initialize
+INFO: Authorization Service has successfully initialized.
+янв. 13, 2024 3:27:19 PM com.sun.enterprise.v3.server.AppServerStartup postStartupJob
+INFO: GlassFish  (commit: null) startup time: Embedded (2 161 ms), startup services (2 341 ms), total (4 502 ms)
+янв. 13, 2024 3:27:20 PM com.sun.enterprise.connectors.jms.util.JmsRaUtil getInstalledMqVersion
+WARNING: Check for a new version of MQ installation failed : C:\Users\LENOVO\AppData\Local\Temp\gfembed11738389013045933474tmp\lib\install\applications\jmsra\..\imqjmsra.rar:C:\Users\LENOVO\AppData\Local\Temp\gfembed11738389013045933474tmp\lib\install\applications\jmsra\imqjmsra.rar
+янв. 13, 2024 3:27:20 PM org.glassfish.admin.mbeanserver.JMXStartupService$JMXConnectorsStarterThread run
+INFO: JMXStartupService has disabled JMXConnector system
+янв. 13, 2024 3:27:20 PM org.glassfish.ejb.embedded.EJBContainerImpl deploy
+INFO: [EJBContainerImpl] Deploying app: target\classes
+янв. 13, 2024 3:27:20 PM org.glassfish.ejb.embedded.EJBContainerImpl deploy
+INFO: [EJBContainerImpl] GlassFish status: STARTED
+янв. 13, 2024 3:27:20 PM org.glassfish.ejb.embedded.EJBContainerImpl deploy
+INFO: [EJBContainerImpl] Deploying as a File
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.ee.authorize.PolicyLoader loadPolicy
+INFO: Loading policy provider org.glassfish.exousia.modules.def.DefaultPolicy.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.SecurityLifecycle <init>
+INFO: Java security manager is disabled.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.SecurityLifecycle onInitialization
+INFO: Entering Security Startup Service.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
+INFO: Realm [admin-realm] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
+INFO: Realm [file] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
+INFO: Realm [certificate] of classtype [com.sun.enterprise.security.auth.realm.certificate.CertificateRealm] successfully created.
+янв. 13, 2024 3:27:22 PM com.sun.enterprise.security.SecurityLifecycle onInitialization
+INFO: Security Service(s) started successfully.
+янв. 13, 2024 3:27:36 PM com.sun.jts.CosTransactions.DefaultTransactionService setServerName
+INFO: JTS5014: Recoverable JTS instance, serverId = [3700]
+янв. 13, 2024 3:27:36 PM org.glassfish.enterprise.iiop.impl.GlassFishORBManager getORB
+INFO: ORB initialization succeeded: com.sun.corba.ee.impl.orb.ORBImpl@541149e7
+янв. 13, 2024 3:27:36 PM org.glassfish.internal.data.ModuleInfo load
+SEVERE: Exception while invoking class org.glassfish.ejb.startup.EjbDeployer load method
+java.lang.RuntimeException: EJB Container initialization error
+	at org.glassfish.ejb.startup.EjbApplication.loadContainers(EjbApplication.java:200)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:262)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:78)
+	at org.glassfish.internal.data.ModuleInfo.load(ModuleInfo.java:182)
+	at org.glassfish.internal.data.ApplicationInfo.load(ApplicationInfo.java:317)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:531)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:259)
+	at org.glassfish.deployment.admin.DeployCommand.execute(DeployCommand.java:459)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:570)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:566)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2.execute(CommandRunnerImpl.java:565)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:596)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:588)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:587)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:1478)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1847)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1723)
+	at com.sun.enterprise.admin.cli.embeddable.DeployerImpl.deploy(DeployerImpl.java:108)
+	at org.glassfish.ejb.embedded.EJBContainerImpl.deploy(EJBContainerImpl.java:118)
+	at org.glassfish.ejb.embedded.EJBContainerProviderImpl.createEJBContainer(EJBContainerProviderImpl.java:115)
+	at jakarta.ejb.embeddable.EJBContainer.createEJBContainer(EJBContainer.java:91)
+	at com.other.plane.main.PlaneApp.main(PlaneApp.java:21)
+	at org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:283)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.Error: Could not initialize access to ClassLoader.defineClass method.
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:67)
+	at com.sun.ejb.codegen.Generator.generate(Generator.java:131)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.generate(EjbClassGeneratorFactory.java:116)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.ensureGenericHome(EjbClassGeneratorFactory.java:59)
+	at com.sun.ejb.EJBUtils.loadGeneratedGenericEJBHomeClass(EJBUtils.java:342)
+	at com.sun.ejb.containers.BaseContainer.<init>(BaseContainer.java:589)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:111)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:105)
+	at com.sun.ejb.containers.StatelessContainerFactory.createContainer(StatelessContainerFactory.java:37)
+	at org.glassfish.ejb.startup.EjbApplication.loadContainers(EjbApplication.java:190)
+	... 27 more
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @4fe6dd7f
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:391)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:367)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:315)
+	at java.base/java.lang.reflect.Method.checkCanSetAccessible(Method.java:203)
+	at java.base/java.lang.reflect.Method.setAccessible(Method.java:197)
+	at com.sun.ejb.codegen.ClassGenerator.lambda$static$0(ClassGenerator.java:58)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:64)
+	... 36 more
+
+янв. 13, 2024 3:27:36 PM com.sun.enterprise.v3.server.ApplicationLifecycle deploy
+SEVERE: Exception during lifecycle processing
+java.lang.RuntimeException: EJB Container initialization error
+	at org.glassfish.ejb.startup.EjbApplication.loadContainers(EjbApplication.java:200)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:262)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:78)
+	at org.glassfish.internal.data.ModuleInfo.load(ModuleInfo.java:182)
+	at org.glassfish.internal.data.ApplicationInfo.load(ApplicationInfo.java:317)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:531)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:259)
+	at org.glassfish.deployment.admin.DeployCommand.execute(DeployCommand.java:459)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:570)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:566)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2.execute(CommandRunnerImpl.java:565)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:596)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:588)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:587)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:1478)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1847)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1723)
+	at com.sun.enterprise.admin.cli.embeddable.DeployerImpl.deploy(DeployerImpl.java:108)
+	at org.glassfish.ejb.embedded.EJBContainerImpl.deploy(EJBContainerImpl.java:118)
+	at org.glassfish.ejb.embedded.EJBContainerProviderImpl.createEJBContainer(EJBContainerProviderImpl.java:115)
+	at jakarta.ejb.embeddable.EJBContainer.createEJBContainer(EJBContainer.java:91)
+	at com.other.plane.main.PlaneApp.main(PlaneApp.java:21)
+	at org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:283)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.Error: Could not initialize access to ClassLoader.defineClass method.
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:67)
+	at com.sun.ejb.codegen.Generator.generate(Generator.java:131)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.generate(EjbClassGeneratorFactory.java:116)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.ensureGenericHome(EjbClassGeneratorFactory.java:59)
+	at com.sun.ejb.EJBUtils.loadGeneratedGenericEJBHomeClass(EJBUtils.java:342)
+	at com.sun.ejb.containers.BaseContainer.<init>(BaseContainer.java:589)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:111)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:105)
+	at com.sun.ejb.containers.StatelessContainerFactory.createContainer(StatelessContainerFactory.java:37)
+	at org.glassfish.ejb.startup.EjbApplication.loadContainers(EjbApplication.java:190)
+	... 27 more
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @4fe6dd7f
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:391)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:367)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:315)
+	at java.base/java.lang.reflect.Method.checkCanSetAccessible(Method.java:203)
+	at java.base/java.lang.reflect.Method.setAccessible(Method.java:197)
+	at com.sun.ejb.codegen.ClassGenerator.lambda$static$0(ClassGenerator.java:58)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:64)
+	... 36 more
+
+янв. 13, 2024 3:27:36 PM org.glassfish.api.ActionReport failure
+SEVERE: Exception while loading the app
+янв. 13, 2024 3:27:36 PM org.glassfish.deployment.admin.DeployCommand execute
+SEVERE: Exception while loading the app : EJB Container initialization error
+java.lang.Error: Could not initialize access to ClassLoader.defineClass method.
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:67)
+	at com.sun.ejb.codegen.Generator.generate(Generator.java:131)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.generate(EjbClassGeneratorFactory.java:116)
+	at com.sun.ejb.codegen.EjbClassGeneratorFactory.ensureGenericHome(EjbClassGeneratorFactory.java:59)
+	at com.sun.ejb.EJBUtils.loadGeneratedGenericEJBHomeClass(EJBUtils.java:342)
+	at com.sun.ejb.containers.BaseContainer.<init>(BaseContainer.java:589)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:111)
+	at com.sun.ejb.containers.StatelessSessionContainer.<init>(StatelessSessionContainer.java:105)
+	at com.sun.ejb.containers.StatelessContainerFactory.createContainer(StatelessContainerFactory.java:37)
+	at org.glassfish.ejb.startup.EjbApplication.loadContainers(EjbApplication.java:190)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:262)
+	at org.glassfish.ejb.startup.EjbDeployer.load(EjbDeployer.java:78)
+	at org.glassfish.internal.data.ModuleInfo.load(ModuleInfo.java:182)
+	at org.glassfish.internal.data.ApplicationInfo.load(ApplicationInfo.java:317)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:531)
+	at com.sun.enterprise.v3.server.ApplicationLifecycle.deploy(ApplicationLifecycle.java:259)
+	at org.glassfish.deployment.admin.DeployCommand.execute(DeployCommand.java:459)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:570)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2$1.run(CommandRunnerImpl.java:566)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$2.execute(CommandRunnerImpl.java:565)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:596)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$3.run(CommandRunnerImpl.java:588)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/javax.security.auth.Subject.doAs(Subject.java:453)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:587)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl.doCommand(CommandRunnerImpl.java:1478)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1847)
+	at com.sun.enterprise.v3.admin.CommandRunnerImpl$ExecutionContext.execute(CommandRunnerImpl.java:1723)
+	at com.sun.enterprise.admin.cli.embeddable.DeployerImpl.deploy(DeployerImpl.java:108)
+	at org.glassfish.ejb.embedded.EJBContainerImpl.deploy(EJBContainerImpl.java:118)
+	at org.glassfish.ejb.embedded.EJBContainerProviderImpl.createEJBContainer(EJBContainerProviderImpl.java:115)
+	at jakarta.ejb.embeddable.EJBContainer.createEJBContainer(EJBContainer.java:91)
+	at com.other.plane.main.PlaneApp.main(PlaneApp.java:21)
+	at org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:283)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @4fe6dd7f
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:391)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:367)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:315)
+	at java.base/java.lang.reflect.Method.checkCanSetAccessible(Method.java:203)
+	at java.base/java.lang.reflect.Method.setAccessible(Method.java:197)
+	at com.sun.ejb.codegen.ClassGenerator.lambda$static$0(ClassGenerator.java:58)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at com.sun.ejb.codegen.ClassGenerator.<clinit>(ClassGenerator.java:64)
+	... 36 more
+
+янв. 13, 2024 3:27:36 PM org.glassfish.ejb.embedded.EJBContainerProviderImpl createEJBContainer
+INFO: [EJBContainerProviderImpl] Cleaning up on failure ...
+JdbcRuntimeExtension,  getAllSystemRAResourcesAndPools = [GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool]
+янв. 13, 2024 3:27:37 PM org.glassfish.admin.mbeanserver.JMXStartupService shutdown
+INFO: JMXStartupService and JMXConnectors have been shut down.
+JdbcRuntimeExtension,  getAllSystemRAResourcesAndPools = [GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool]
+янв. 13, 2024 3:27:37 PM com.sun.enterprise.v3.server.AppServerStartup$MasterRunLevelListener onError
+WARNING: An error occured when the system was coming down
+MultiException stack 1 of 1
+java.lang.reflect.InaccessibleObjectException: Unable to make field private static javax.naming.spi.InitialContextFactoryBuilder javax.naming.spi.NamingManager.initctx_factory_builder accessible: module java.naming does not "opens javax.naming.spi" to unnamed module @4fe6dd7f
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:391)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:367)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:315)
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183)
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177)
+	at com.sun.enterprise.naming.GlassFishNamingBuilder.resetInitialContextFactoryBuilder(GlassFishNamingBuilder.java:187)
+	at com.sun.enterprise.naming.GlassFishNamingBuilder.preDestroy(GlassFishNamingBuilder.java:179)
+	at org.jvnet.hk2.internal.ClazzCreator.preDestroyMe(ClazzCreator.java:369)
+	at org.jvnet.hk2.internal.ClazzCreator.dispose(ClazzCreator.java:440)
+	at org.jvnet.hk2.internal.SystemDescriptor.dispose(SystemDescriptor.java:521)
+	at org.glassfish.hk2.runlevel.internal.AsyncRunLevelContext.destroyOne(AsyncRunLevelContext.java:403)
+	at org.glassfish.hk2.runlevel.RunLevelContext.destroyOne(RunLevelContext.java:81)
+	at org.jvnet.hk2.internal.ServiceHandleImpl.close(ServiceHandleImpl.java:166)
+	at org.glassfish.hk2.api.ServiceHandle.destroy(ServiceHandle.java:63)
+	at org.glassfish.hk2.runlevel.internal.CurrentTaskFuture$DownQueueRunner.run(CurrentTaskFuture.java:1270)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+янв. 13, 2024 3:27:37 PM com.sun.enterprise.v3.server.AppServerStartup stop
+INFO: Shutdown procedure finished
+[WARNING] 
+jakarta.ejb.EJBException: Failed to deploy EJB modules - see log for details
+    at org.glassfish.ejb.embedded.EJBContainerImpl.deploy (EJBContainerImpl.java:126)
+    at org.glassfish.ejb.embedded.EJBContainerProviderImpl.createEJBContainer (EJBContainerProviderImpl.java:115)
+    at jakarta.ejb.embeddable.EJBContainer.createEJBContainer (EJBContainer.java:91)
+    at com.other.plane.main.PlaneApp.main (PlaneApp.java:21)
+    at org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0 (ExecJavaMojo.java:283)
+    at java.lang.Thread.run (Thread.java:1583)

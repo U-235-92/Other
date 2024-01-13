@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Manufacturer implements Serializable {
@@ -17,6 +19,7 @@ public class Manufacturer implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	@Column(name = "mnf_name")
+	@NotNull @NotEmpty
 	private String name;
 	
 	public Manufacturer() {
