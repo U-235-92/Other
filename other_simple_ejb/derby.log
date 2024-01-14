@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sat Jan 13 15:23:02 GMT+04:00 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-018d-028f-9d11-00000261c748 
-on database directory memory:E:\eclipse-workspace\Other\other_simple_ejb\plane_db with class loader org.codehaus.mojo.exec.URLClassLoaderBuilder$ExecJavaClassLoader@5bca7664 
+Sun Jan 14 13:50:50 GMT+04:00 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-018d-0761-8f6a-00000126ecc0 
+on database directory memory:E:\eclipse-workspace\Other\other_simple_ejb\plane_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@55f96302 
 Loaded from file:/C:/Users/LENOVO/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/8.0.0-M1/glassfish-embedded-all-8.0.0-M1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.1+12-LTS-29
