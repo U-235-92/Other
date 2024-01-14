@@ -8,13 +8,4 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>other_hello_ejb</artifactId>
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.glassfish.main.extras/glassfish-embedded-all -->
-		<dependency>
-			<groupId>org.glassfish.main.extras</groupId>
-			<artifactId>glassfish-embedded-all</artifactId>
-			<version>8.0.0-M1</version>
-			<scope>runtime</scope>
-		</dependency>
-	</dependencies>
 </project>
