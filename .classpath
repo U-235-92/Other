@@ -24,18 +24,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO"/>
-	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="resources">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/apache-derby/db-derby-10.17.1.0-bin/lib/derby.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/apache-derby/db-derby-10.17.1.0-bin/lib/derbyclient.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
