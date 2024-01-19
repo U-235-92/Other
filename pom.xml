@@ -7,8 +7,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>other_hello_service_ejb</module>
-		<module>other_hello_client_ejb</module>
+		<module>other_service_ejb</module>
+		<module>other_client_ejb</module>
 	</modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -177,7 +177,6 @@
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.17.1.0</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.derby/derbyclient -->
