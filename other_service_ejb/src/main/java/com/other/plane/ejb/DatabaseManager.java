@@ -9,13 +9,16 @@ import jakarta.annotation.PreDestroy;
 import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
 
 @Singleton
 @DataSourceDefinition(
-		className = "org.apache.derby.jdbc.EmbeddedDataSource",
+		className = "org.h2.jdbcx.JdbcDataSource",
 		name = "java:global/other_service_ejb/plane_ds",
-		url = "jdbc:derby:memory:plane_db;create=true")
+		url = "jdbc:h2:mem:plane_db",
+		maxPoolSize = 32)
+@Startup
 public class DatabaseManager {
 
 	@EJB
@@ -25,11 +28,13 @@ public class DatabaseManager {
 	@Inject @PlaneType(manufacturer = PlaneEnum.ILUSHIN)
 	private Plane il62;
 	
+	public DatabaseManager() {
+		super();
+	}
+	
 	@PostConstruct
 	protected void fillDB() {
 		planeController.create(dc10);
-		planeController.create(dc10);
-		planeController.create(il62);
 		planeController.create(il62);
 	}
 	

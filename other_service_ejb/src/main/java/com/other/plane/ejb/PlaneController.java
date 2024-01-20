@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
-public class PlaneController implements RemoteController<Plane> {
+public class PlaneController implements PlaneRemoteController {
 
 	@PersistenceContext(name = "plane_pu")
 	private EntityManager entityManager;
@@ -32,11 +32,17 @@ public class PlaneController implements RemoteController<Plane> {
 	}
 	
 	@Override
-	public List<Plane> getList(Plane obj) {
+	public List<Plane> getListOf(Plane obj) {
 		TypedQuery<Plane> typedQuery = entityManager.
 				createQuery("SELECT p FROM Plane p WHERE p.model = :pmodel AND p.manufacturer = :pmanufacturer", Plane.class);
 		typedQuery.setParameter("pmodel", obj.getModel());
 		typedQuery.setParameter("pmanufacturer", obj.getManufacturer());
+		return typedQuery.getResultList();
+	}
+	
+	@Override
+	public List<Plane> getAllPlanes() {
+		TypedQuery<Plane> typedQuery = entityManager.createQuery("SELECT p FROM Plane p", Plane.class);
 		return typedQuery.getResultList();
 	}
 

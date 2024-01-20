@@ -1,5 +1,7 @@
 package com.other.plane.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
@@ -9,8 +11,9 @@ import jakarta.persistence.Id;
 
 @Entity
 @Access(AccessType.FIELD)
-public class Plane {
+public class Plane implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue @Column(name = "plane_id")
 	private int id;
 	@Column(name = "plane_model")
