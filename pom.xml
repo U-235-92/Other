@@ -9,6 +9,8 @@
 	<modules>
 		<module>other_service_ejb</module>
 		<module>other_client_ejb</module>
+		<module>other_jms_producer</module>
+		<module>other_jms_consumer</module>
 	</modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
