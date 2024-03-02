@@ -9,19 +9,25 @@
 	</parent>
 	<artifactId>other_jms_producer</artifactId>
 	<dependencies>
-		<!--
-		https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
 		<dependency>
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
 			<version>8.0.0</version>
-			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>org.glassfish.main.extras</groupId>
-			<artifactId>glassfish-embedded-all</artifactId>
-			<version>3.1.2</version>
+			<groupId>fish.payara.extras</groupId>
+			<artifactId>payara-embedded-all</artifactId>
+			<version>4.1.1.154</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.mq</groupId>
+			<artifactId>imq</artifactId>
+			<version>5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.jms</groupId>
+			<artifactId>jakarta.jms-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 	</dependencies>
 </project>
