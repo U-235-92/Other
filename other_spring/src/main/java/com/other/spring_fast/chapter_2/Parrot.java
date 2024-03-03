@@ -1,5 +1,10 @@
-package com.other.spring_fast_chapter_2;
+package com.other.spring_fast.chapter_2;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class Parrot {
 
 	private String name;
@@ -15,5 +20,10 @@ public class Parrot {
 	@Override
 	public String toString() {
 		return "Parrot [name=" + name + "]";
+	}
+	
+	@PostConstruct
+	public void init() {
+		this.name = "Chika";
 	}
 }
