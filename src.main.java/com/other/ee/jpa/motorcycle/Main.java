@@ -20,11 +20,23 @@ public class Main {
 		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
 		putMotorcycleIntoDB(makeMotorcycle(400, 150, "Yamaha", "SR400"), entityManager);
 		putMotorcycleIntoDB(makeMotorcycle(400, 150, "Honda", "SB400SS"), entityManager);
+		Motorcycle boxer = makeMotorcycle(150, 100, "Bajaj", "Boxer150");
+		putMotorcycleIntoDB(boxer, entityManager);
 		logger.log(Level.INFO, "All motorcycles after INSERT operations");
 		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
 		logger.log(Level.INFO, "Select Yamaha SR400");
 		Motorcycle selectedMoto = entityManager.createNamedQuery("selectYamahaSR400", Motorcycle.class).getSingleResult();
 		System.out.println("Inserted moto: " + selectedMoto);
+		//----REMOVE TEST----
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		logger.setLevel(Level.WARNING);
+		logger.log(Level.WARNING, "----BEFORE REMOVE----");
+		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
+		entityManager.remove(boxer);
+		logger.log(Level.WARNING, "----AFTER REMOVE----");
+		entityManager.createNamedQuery("selectAllMotorcycles", Motorcycle.class).getResultList().forEach(moto -> System.out.println(moto));
+		transaction.commit();
 		entityManager.close();
 	}
 	
