@@ -1,4 +1,4 @@
-package com.other.spring_fast.chapter_10.rest;
+package com.other.spring_fast.chapter_10.rest.samples;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

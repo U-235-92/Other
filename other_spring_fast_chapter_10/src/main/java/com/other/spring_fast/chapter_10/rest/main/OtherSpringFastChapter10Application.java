@@ -1,4 +1,4 @@
-package com.other.spring_fast.chapter_10.rest;
+package com.other.spring_fast.chapter_10.rest.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
