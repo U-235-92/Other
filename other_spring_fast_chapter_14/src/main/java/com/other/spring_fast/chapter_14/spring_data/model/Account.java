@@ -1,4 +1,4 @@
-package com.other.spring_fast.chapter_13.spring_data.model;
+package com.other.spring_fast.chapter_14.spring_data.model;
 
 import java.math.BigDecimal;
 
