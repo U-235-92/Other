@@ -3,7 +3,6 @@ package com.other.spring_fast.chapter_14.spring_data.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +14,13 @@ import com.other.spring_fast.chapter_14.spring_data.util.AccountNotFoundExceptio
 @Transactional
 public class TransferService {
 
-	@Autowired
-	private AccountRepository accountRepository;
+	private final AccountRepository accountRepository;
 	
+	public TransferService(AccountRepository accountRepository) {
+		super();
+		this.accountRepository = accountRepository;
+	}
+
 	public void transferMoney(long idSender, long idReceiver, BigDecimal amount) {
 		Account sender = accountRepository.findById(idSender).orElseThrow(() -> new AccountNotFoundException());
 		Account receiver = accountRepository.findById(idReceiver).orElseThrow(() -> new AccountNotFoundException());

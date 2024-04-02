@@ -1,4 +1,4 @@
-package com.other.spring_fast.chapter_13.spring_data.main;
+package com.other.spring_fast.chapter_13.spring_data.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
