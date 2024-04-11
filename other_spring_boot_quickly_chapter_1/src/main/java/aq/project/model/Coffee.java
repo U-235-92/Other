@@ -2,9 +2,14 @@ package aq.project.model;
 
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Coffee {
 
-	private final String id;
+	@Id
+	private String id;
 	private String name;
 	
 	public Coffee(String id, String name) {
@@ -15,6 +20,10 @@ public class Coffee {
 
 	public Coffee(String name) {
 		this(UUID.randomUUID().toString(), name);
+	}
+	
+	public Coffee() {
+		super();
 	}
 
 	public String getName() {
@@ -27,5 +36,9 @@ public class Coffee {
 
 	public String getId() {
 		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

@@ -1,7 +1,6 @@
 package aq.project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,44 +14,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import aq.project.model.Coffee;
+import aq.project.repository.CoffeeRepository;
 
 @RestController
-@RequestMapping(value = "/coffees") 
+@RequestMapping(value = "/coffees")
 public class RestApiDemoController {
 
-	private List<Coffee> coffees = new ArrayList<>();
-	
-	public RestApiDemoController() {
-		coffees.addAll(List.of(new Coffee("Cafe Cereza"), new Coffee("Cafe Ganador"), new Coffee("Cafe Lareno"), new Coffee("Cafe Tres Pontas")));
+	private final CoffeeRepository coffeeRepository;
+
+	public RestApiDemoController(CoffeeRepository coffeeRepository) {
+		this.coffeeRepository = coffeeRepository;
 	}
-	
+
 	@GetMapping
 	Iterable<Coffee> getCoffees() {
-		return coffees;
+		return coffeeRepository.findAll();
 	}
-	
+
+	@GetMapping("/{id}")
+	Optional<Coffee> getCoffeeById(@PathVariable String id) {
+		return coffeeRepository.findById(id);
+	}
+
 	@PostMapping
 	Coffee postCoffee(@RequestBody Coffee coffee) {
-		coffees.add(coffee);
-		return coffee;
+		return coffeeRepository.save(coffee);
 	}
-	
+
 	@PutMapping("/{id}")
 	ResponseEntity<Coffee> putCoffee(@PathVariable String id, @RequestBody Coffee coffee) {
-		int coffeIndex = -1;
-		for(Coffee c : coffees) {
-			if(c.getId().equals(id)) {
-				coffeIndex = coffees.indexOf(c);
-				coffees.set(coffeIndex, coffee);
-			}
-		}
-		return (coffeIndex == -1) ? 
-					ResponseEntity.status(HttpStatus.CREATED).body(postCoffee(coffee)) : 
-					ResponseEntity.status(HttpStatus.OK).body(coffee);
+		return (coffeeRepository.existsById(id)) 
+				? ResponseEntity.status(HttpStatus.OK).body(postCoffee(coffee))
+				: ResponseEntity.status(HttpStatus.CREATED).body(postCoffee(coffee));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	void deleteCoffee(@PathVariable String id) {
-		coffees.removeIf(c -> c.getId().equals(id));
+		coffeeRepository.deleteById(id);
 	}
 }
