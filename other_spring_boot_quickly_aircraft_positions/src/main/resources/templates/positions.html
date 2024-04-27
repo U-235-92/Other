@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Position Report</title>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = setupRefresh;
+		
+		function setupRefresh() {
+			setTimeout("refreshPage();", 5000);
+		}
+		
+		function refreshPage() {
+			window.location = location.href;
+		}
+	</script>
+	<div class="positionlist" th:unless="${#lists.isEmpty(currentPositions)}">
+		<h2>Current Aircraft Positions</h2>
+		<table>
+			<thead>
+			<tr>
+				<th>Call Sign</th>
+				<th>Squawk</th>
+				<th>AC Reg</th>
+				<th>Flight #</th>
+				<th>Route</th>
+				<th>AC Type</th>
+				<th>Altitude</th>
+				<th>Heading</th>
+				<th>Speed</th>
+				<th>Vert Rate</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Last Seen</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ac : ${currentPositions}">
+					<td th:text="${ac.callsign}" />
+					<td th:text="${ac.squawk}" />
+					<td th:text="${ac.reg}" />
+					<td th:text="${ac.flightno}" />
+					<td th:text="${ac.route}" />
+					<td th:text="${ac.type}" />
+					<td th:text="${ac.altitude}" />
+					<td th:text="${ac.heading}" />
+					<td th:text="${ac.speed}" />
+					<!-- <td th:text="${ac.vertRate}" /> -->
+					<td th:text="${ac.lat}" />
+					<td th:text="${ac.lon}" />
+					<td th:text="${ac.lastSeenTime}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
