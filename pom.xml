@@ -12,6 +12,7 @@
 		<module>other_jms_producer</module>
 		<module>other_jms_consumer</module>
 		<module>other_spring</module>
+		<module>other_rabbitmq_samples</module>
 	</modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>

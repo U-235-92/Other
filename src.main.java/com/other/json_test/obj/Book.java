@@ -19,10 +19,6 @@ public class Book {
 	private String id;
 	private String type;
 	
-	public Book() {
-		super();
-	}
-	
 	public Book(String id, String type, String title, List<String> authors) {
 		super();
 		this.title = title;
