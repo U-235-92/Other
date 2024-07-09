@@ -47,7 +47,7 @@ public class ReceiverConfiguration {
 	
 	@Bean
 	Binding binding(Queue queue, Exchange exchange) {
-		Binding binding = BindingBuilder.bind(queue).to(exchange).with(GREEN_ROUTING_KEY).noargs();
+		Binding binding = BindingBuilder.bind(queue).to(exchange).with(ORANGE_ROUTING_KEY).noargs();
 		return binding;
 	}
 	
